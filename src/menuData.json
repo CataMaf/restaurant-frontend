@@ -1,0 +1,185 @@
+[
+    {
+      "category": "Aperitive",
+      "items": [
+        {
+          "name": "Bruschete cu roșii și busuioc",
+          "description": "Pâine prăjită cu roșii proaspete, busuioc și ulei de măsline.",
+          "price": 15
+        },
+        {
+          "name": "Platou de brânzeturi",
+          "description": "Selecție de brânzeturi artizanale, nuci și miere.",
+          "price": 40,
+          "recommendation": "Vin alb sec, Sauvignon Blanc"
+        }
+      ]
+    },
+    {
+      "category": "Ciorbe",
+      "items": [
+        {
+          "name": "Ciorbă de văcuță",
+          "description": "Carne de vită, legume proaspete și condimente.",
+          "price": 20
+        },
+        {
+          "name": "Supă de pui cu tăiței",
+          "description": "Supă limpede cu tăiței de casă.",
+          "price": 15
+        }
+      ]
+    },
+    {
+      "category": "Feluri principale - Carne de pui",
+      "items": [
+        {
+          "name": "Pui cu smântână și ciuperci",
+          "description": "Piept de pui gătit în sos de smântână și ciuperci.",
+          "price": 35,
+          "recommendation": "Vin alb demisec, Chardonnay"
+        },
+        {
+          "name": "Aripioare picante",
+          "description": "Aripioare de pui condimentate, servite cu sos de iaurt.",
+          "price": 25,
+          "recommendation": "Bere blondă"
+        }
+      ]
+    },
+    {
+      "category": "Feluri principale - Carne de porc",
+      "items": [
+        {
+          "name": "Ceafă de porc la grătar",
+          "description": "Ceafă de porc gătită pe grătar, servită cu garnitură de cartofi.",
+          "price": 40,
+          "recommendation": "Vin roșu sec, Merlot"
+        },
+        {
+          "name": "Cotlet de porc cu sos de piper",
+          "description": "Cotlet gătit la tigaie, servit cu sos de piper și legume.",
+          "price": 45,
+          "recommendation": "Vin roșu sec, Cabernet Sauvignon"
+        }
+      ]
+    },
+    {
+      "category": "Feluri principale - Pește",
+      "items": [
+        {
+          "name": "Somon la grătar",
+          "description": "File de somon servit cu legume sotate.",
+          "price": 60,
+          "recommendation": "Vin alb sec, Riesling"
+        },
+        {
+          "name": "Dorada cu legume",
+          "description": "Pește întreg gătit la cuptor, servit cu legume.",
+          "price": 65,
+          "recommendation": "Vin alb sec, Pinot Grigio"
+        }
+      ]
+    },
+    {
+      "category": "Garnituri",
+      "items": [
+        {
+          "name": "Cartofi prăjiți",
+          "description": "Cartofi crocanți gătiti în ulei vegetal.",
+          "price": 10
+        },
+        {
+          "name": "Piure de cartofi",
+          "description": "Cartofi zdrobiți, amestecați cu unt și lapte.",
+          "price": 10
+        },
+        {
+          "name": "Legume sotate",
+          "description": "Legume proaspete gătite rapid în tigaie.",
+          "price": 12
+        },
+        {
+          "name": "Orez cu legume",
+          "description": "Orez alb servit cu legume sotate.",
+          "price": 12
+        },
+        {
+          "name": "Salată verde",
+          "description": "Frunze de salată proaspătă cu ulei de măsline și lămâie.",
+          "price": 8
+        }
+      ]
+    },
+    {
+      "category": "Deserturi",
+      "items": [
+        {
+          "name": "Tiramisu",
+          "description": "Desert clasic italian cu mascarpone, cafea și cacao.",
+          "price": 20
+        },
+        {
+          "name": "Papanși cu smântână și dulceață",
+          "description": "Desert tradițional românesc.",
+          "price": 25
+        }
+      ]
+    },
+    {
+      "category": "Băuturi alcoolice - Vinuri",
+      "items": [
+        {
+          "name": "Vin alb sec",
+          "description": "Sauvignon Blanc",
+          "price": 100,
+          "unit": "sticlă"
+        },
+        {
+          "name": "Vin roșu sec",
+          "description": "Merlot",
+          "price": 120,
+          "unit": "sticlă"
+        },
+        {
+          "name": "Vin roze",
+          "description": "Rose d’Anjou",
+          "price": 110,
+          "unit": "sticlă"
+        }
+      ]
+    },
+    {
+      "category": "Băuturi alcoolice - Bere",
+      "items": [
+        {
+          "name": "Bere blondă",
+          "description": "Ursus",
+          "price": 10
+        },
+        {
+          "name": "Bere neagră",
+          "description": "Guinness",
+          "price": 15
+        }
+      ]
+    },
+    {
+      "category": "Băuturi - Răcoritoare",
+      "items": [
+        {
+          "name": "Coca-Cola",
+          "price": 8
+        },
+        {
+          "name": "Apă minerală",
+          "price": 7
+        },
+        {
+          "name": "Apă plată",
+          "price": 7
+        }
+      ]
+    }
+  ]
+  

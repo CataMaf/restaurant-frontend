@@ -17,7 +17,7 @@ const OrderCard = styled.div`
 
 const Dashboard = () => {
   const [orders, setOrders] = useState([]);
-  const socket = io('http://localhost:4000'); // URL-ul serverului WebSocket
+  const socket = io('http://192.168.0.103:4000'); // URL-ul serverului WebSocket
 
   useEffect(() => {
     // Primește comenzile existente

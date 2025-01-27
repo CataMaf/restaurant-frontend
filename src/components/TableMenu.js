@@ -72,7 +72,7 @@ const TableMenu = () => {
   const [isOrderSent, setIsOrderSent] = useState(false);
 
   // Inițializăm conexiunea WebSocket
-  const socket = io('http://localhost:4000');
+  const socket = io('http://192.168.0.103:4000');
 
   useEffect(() => {
     // Efect de curățare: Deconectăm socket-ul la demontarea componentei

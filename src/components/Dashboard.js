@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { io } from 'socket.io-client';
+import socket from '../socket';
 
 const DashboardWrapper = styled.div`
   padding: 20px;
@@ -15,41 +15,111 @@ const OrderCard = styled.div`
   margin-bottom: 15px;
 `;
 
+const HighlightedText = styled.span`
+  color: #007bff;
+  font-weight: bold;
+`;
+
+const ResetButton = styled.button`
+  padding: 8px 12px;
+  font-size: 14px;
+  color: white;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #a71d2a;
+  }
+`;
+
+const ConfirmButton = styled.button`
+  padding: 8px 12px;
+  font-size: 14px;
+  color: white;
+  background-color: #28a745;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
 const Dashboard = () => {
-  const [orders, setOrders] = useState([]);
-  const socket = io('http://192.168.0.103:4000'); // URL-ul serverului WebSocket
+  const [orders, setOrders] = useState([]); // Comenzile curente
 
   useEffect(() => {
-    // Primește comenzile existente
+    socket.connect();
+  
+    // Ascultăm comenzile primite de la server
     socket.on('orders', (data) => {
-      setOrders(data);
+      console.log('Comenzi primite de la server:', data); // Logăm comenzile primite
+      setOrders(data); // Actualizăm starea comenzilor
     });
-
-    // Curăță conexiunea la deconectare
+  
     return () => {
-      socket.disconnect();
+      socket.off('orders'); // Dezactivăm ascultătorul la demontare
     };
   }, []);
+
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Conexiune WebSocket stabilită');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Conexiune WebSocket întreruptă');
+    });
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+    };
+  }, []);
+  
+  
+  const handleConfirmView = (tableId) => {
+    console.log(`Trimitere confirmare vizualizare pentru masa ${tableId}`);
+    socket.emit('confirm-view', tableId); // Trimite evenimentul către server
+  };
+  
+  
+  const handleResetTable = (tableId) => {
+    console.log(`Resetare masă ${tableId}`);
+    socket.emit('reset-table', tableId);
+  };
+  
 
   return (
     <DashboardWrapper>
       <h1>Dashboard Comenzi</h1>
-      {orders.length === 0 ? (
-        <p>Nu există comenzi momentan.</p>
-      ) : (
-        orders.map((order, index) => (
-          <OrderCard key={index}>
-            <h3>Masa {order.tableId}</h3>
-            <ul>
-              {order.items.map((item, i) => (
-                <li key={i}>
-                  {item.name} - {item.price} RON
-                </li>
-              ))}
-            </ul>
-          </OrderCard>
-        ))
-      )}
+      {orders.map((order) => (
+        <OrderCard key={order.tableId}>
+          <h3>Masa {order.tableId}</h3>
+          <ul>
+            {order.items.map((item, index) => (
+              <li key={index}>
+                {item.viewed ? (
+                  item.name
+                ) : (
+                  <HighlightedText>{item.name}</HighlightedText>
+                )}{' '}
+                - {item.price} RON
+              </li>
+            ))}
+          </ul>
+          {order.hasNewChanges && (
+            <ConfirmButton onClick={() => handleConfirmView(order.tableId)}>
+              Confirmă Vizualizarea Modificărilor
+            </ConfirmButton>
+          )}
+          <ResetButton onClick={() => handleResetTable(order.tableId)}>Resetează Masa</ResetButton>
+        </OrderCard>
+      ))}
     </DashboardWrapper>
   );
 };

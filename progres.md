@@ -86,8 +86,8 @@ Resetarea unei mese funcționează fără probleme.
 ## Ce urmează să implementăm:
 
 - mutarea cosului la o ruta noua "/masa/{id_masa}/cos" pentru a putea fi accesat mai usor
+-in cos sa fie vizibile toate produsele trimise catre bar cu pretul aferent fiecaruia si totalul, iar dedesupt sa existe un buton "solicita nota de plata". mai exact in pagina cos in prima parte sa para ceea ce s-a introdus in cos dar nu a fost comandat iar dupa apasarea butonului de trimitere a comenzii, in a doua parte a paginii cos sa existe o lista cu toate produsele comandate la acea masa si butonul de solicitare a notei de plata
 - crearea in pagina de meniu a unui buton de accesare a cosului daca sunt produse in cos
-- implementarea functionalitatii de a comanda iar dupa trimiterea comenzii, iar in dashboard sa nu se creeze din nou masa daca nu a fost inchisa ci sa se actualizeze cu noile produse comandate evidentiate astfel incat persoana de la bar sa-si dea seama ca sunt produse noi adaugate
 - datele despre comenzile fiecarei mese trebuie sa fie persistente pana la efectuarea platii
 - crearea pentru client a ununi buton "Solicita nota de plata" la pasarea caruia se va trimite mesaj catre dashboard si totodata i se va afisa nota de plata care va contine produsele comandate, pretul per produs si totalul
 - crearea in dashboard a unui buton "Plata efectuata" care va sterge masa respectiva de pe dashboard si toate celelalte informatii (resetarea mesei pentru a putea fi utilizata de alti clienti)

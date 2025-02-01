@@ -1,7 +1,7 @@
 
 import { io } from 'socket.io-client';
 
-const socket = io('http://192.168.0.101:4000', { autoConnect: false });
+const socket = io('http://192.168.0.103:4000', { autoConnect: false });
 
 
 socket.on('connect', () => {

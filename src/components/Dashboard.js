@@ -81,18 +81,15 @@ const Dashboard = () => {
     };
   }, []);
   
-  
   const handleConfirmView = (tableId) => {
     console.log(`Trimitere confirmare vizualizare pentru masa ${tableId}`);
     socket.emit('confirm-view', tableId); // Trimite evenimentul către server
   };
-  
-  
+
   const handleResetTable = (tableId) => {
     console.log(`Resetare masă ${tableId}`);
     socket.emit('reset-table', tableId);
   };
-  
 
   return (
     <DashboardWrapper>

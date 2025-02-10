@@ -55,6 +55,9 @@ const Dashboard = () => {
   useEffect(() => {
     socket.connect();
   
+    // Solicită datele inițiale pentru dashboard
+    socket.emit('request-dashboard-data');
+  
     // Ascultăm comenzile primite de la server
     socket.on('orders', (data) => {
       console.log('Comenzi primite de la server:', data); // Logăm comenzile primite
@@ -63,6 +66,7 @@ const Dashboard = () => {
   
     return () => {
       socket.off('orders'); // Dezactivăm ascultătorul la demontare
+      socket.disconnect();
     };
   }, []);
 

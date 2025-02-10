@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import socket from '../socket'; // Importă conexiunea WebSocket
+import socket from '../socket';
 import menuData from '../menuData.json';
 
 const MenuWrapper = styled.div`
@@ -80,36 +80,41 @@ const Button = styled.button`
   }
 `;
 
-const CartWrapper = styled.div`
-  margin-top: 30px;
-  padding: 20px;
-  background: #f8f8f8;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-`;
-
-const Total = styled.h3`
-  margin-top: 20px;
+const CartButton = styled(Button)`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  font-size: 16px;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 `;
 
 const TableMenu = () => {
   const { id_masa } = useParams();
-  const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [expandedProduct, setExpandedProduct] = useState(null);
-  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [hasItems, setHasItems] = useState(false);
 
   useEffect(() => {
-    socket.connect(); // Conectează socket-ul
+    socket.connect();
+
+    socket.emit('get-cart', { tableId: id_masa });
+    socket.on('cart-data', (data) => {
+      // Arată butonul dacă există fie produse în coș, fie produse comandate
+      setHasItems(data.length > 0);
+    });
 
     return () => {
-      socket.disconnect(); // Deconectează socket-ul la demontare
+      socket.disconnect();
     };
-  }, []);
+  }, [id_masa]);
 
   const toggleCategory = (categoryIndex) => {
     setExpandedCategory((prev) => (prev === categoryIndex ? null : categoryIndex));
-    setExpandedProduct(null); // Resetează produsele extinse când o altă categorie este extinsă
+    setExpandedProduct(null);
   };
 
   const toggleProduct = (productIndex) => {
@@ -117,25 +122,13 @@ const TableMenu = () => {
   };
 
   const handleAddToCart = (item) => {
-    setCart([...cart, item]);
+    socket.emit('add-to-cart', { tableId: id_masa, item });
+    setHasItems(true);
   };
 
-  const handleRemoveFromCart = (indexToRemove) => {
-    setCart(cart.filter((_, index) => index !== indexToRemove));
+  const navigateToCart = () => {
+    navigate(`/masa/${id_masa}/cos`);
   };
-
-  const handleSendOrder = () => {
-    const order = {
-      tableId: id_masa,
-      items: cart,
-    };
-    socket.emit('new-order', order); // Trimite comanda către server
-    setCart([]); // Golește coșul
-    setConfirmationMessage('Comanda a fost trimisă!');
-    setTimeout(() => setConfirmationMessage(''), 3000);
-  };
-
-  const total = cart.reduce((acc, item) => acc + item.price, 0);
 
   return (
     <MenuWrapper>
@@ -157,7 +150,7 @@ const TableMenu = () => {
                       <div>
                         <strong>{item.name}</strong>: {item.description} - <strong>{item.price} RON</strong>
                       </div>
-                      <Button onClick={() => handleAddToCart(item)}>Adaugă</Button>
+                      <Button onClick={() => handleAddToCart(item)}>Adaugă în coș</Button>
                     </Item>
                   </ProductDetails>
                 </Product>
@@ -166,30 +159,11 @@ const TableMenu = () => {
           )}
         </Category>
       ))}
-      <CartWrapper>
-        <h2>Coș</h2>
-        {cart.length === 0 ? (
-          <p>Coșul este gol.</p>
-        ) : (
-          <ul>
-            {cart.map((item, i) => (
-              <Item key={i}>
-                <span>
-                  {item.name} - {item.price} RON
-                </span>
-                <Button onClick={() => handleRemoveFromCart(i)}>Șterge</Button>
-              </Item>
-            ))}
-          </ul>
-        )}
-        <Total>Total: {total} RON</Total>
-        {cart.length > 0 && (
-          <Button onClick={handleSendOrder}>Trimite Comanda</Button>
-        )}
-        {confirmationMessage && (
-          <p style={{ color: 'green', marginTop: '10px' }}>{confirmationMessage}</p>
-        )}
-      </CartWrapper>
+      {hasItems && (
+        <CartButton onClick={navigateToCart}>
+          Vezi coșul
+        </CartButton>
+      )}
     </MenuWrapper>
   );
 };
